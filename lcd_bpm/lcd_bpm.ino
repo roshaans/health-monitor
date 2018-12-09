@@ -1,3 +1,5 @@
+#include <PulseSensorPlayground.h>
+
 //calculates bpm + displays on lcd
 //12/04/18
 

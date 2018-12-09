@@ -12,7 +12,7 @@
 
 int PulseSensorPurplePin = 0;        // Pulse Sensor PURPLE WIRE connected to ANALOG PIN 0
 int LED13 = 2;   //  The on-board Arduion LED
-
+int i = 0;
 
 int Signal;                // holds the incoming raw data. Signal value can range from 0-1024
 int Threshold = 550;            // Determine which Signal to "count as a beat", and which to ingore.
@@ -31,7 +31,7 @@ int switchonoff = 0;
 
 
 int powersensorPin = 3;
-
+int power = 0;
 //int stored_bpm = [];
 
 
@@ -58,7 +58,7 @@ void setup() {
   pinMode(powersensorPin, OUTPUT);
   Serial.begin(9600);         // Set's up Serial Communication at certain speed.
   pinMode(switchPin, INPUT);   // set up the digital I/O pin 8 to be an input
-  pinMode(powersensorPin, OUTPUT);
+  pinMode(powersensorPin, INPUT);
   pinMode(chipSelect, OUTPUT);
   delay(100);                  // short delay
 
@@ -82,14 +82,14 @@ void setup() {
   if (digitalRead(erase_dPin) == HIGH) {
     // delete the file:
     Serial.println("Removing datalog.txt...");
-    SD.remove("datalog.txt");
+    SD.remove("DATA.txt");
     delay(2000);
   }
 
 
 }
 
-// The Main Loop Function
+
 void loop() {
   Signal = analogRead(PulseSensorPurplePin);  // Read the PulseSensor's value.
   // Assign this value to the "Signal" variable.
@@ -104,7 +104,15 @@ void loop() {
   }
 
 
-  File dataFile = SD.open("DATALOG1.txt", FILE_WRITE);
+  File dataFile = SD.open("DATA.txt", FILE_WRITE);
+
+
+  String dataString = "";
+  //dataString += "";
+  dataString += String(savedBPM);
+  dataString += "";
+  //dataString += String(distance);
+  //dataString += "";
 
 
   int myBPM = pulseSensor.getBeatsPerMinute();  // Calls function on our pulseSensor object that returns BPM as an "int".
@@ -120,27 +128,30 @@ void loop() {
   delay(200);
 
 
+/*power switch*/
+//while (power == LOW) {  // 1st test - is the switch on/off, 1/0, HIGH/LOW?
+//}
+
+
+
   /* whisker switch*/
   switchonoff = digitalRead(switchPin);   // read the current state of the switch
   if (switchonoff == HIGH) {  // 1st test - is the switch on/off, 1/0, HIGH/LOW?
-//    if (flag == 0) {
+    if (flag == 0) {
+      i = i + 1;
       savedBPM = myBPM;
       Serial.println(savedBPM);
-      dataFile.println(savedBPM);
-      dataFile.flush();
-      dataFile.close();
-     // flag = 1;               // change the flag's "state"
+      //dataFile.println(dataString);
+      //dataFile.print(savedBPM);
+      flag = 1;               // change the flag's "state"
       delay(50);
     }
-  //}
-  //if (flag == 1){
-  //    dataFile.println(savedBPM);
-      //dataFile.flush();
-      //dataFile.close();
-  //}
-//  if (switchonoff == LOW && flag == 1) {       // 1st & 2nd tests together (not nested)
-   // flag = 0;          //print the elapsed time to serial monitor
-  //}
+
+  }
+
+  if (switchonoff == LOW && flag == 1) {       // 1st & 2nd tests together (not nested)
+    flag = 0;          //print the elapsed time to serial monitor
+  }
 
 
   //Serial.println(switchonoff);
@@ -150,10 +161,18 @@ void loop() {
   lcd.setCursor(13, 1);
   lcd.print((savedBPM));
   //Serial.println(savedBPM);
-  dataFile.print(savedBPM);
-  //dataFile.print(" ");
-  //dataFile.flush();
-  //dataFile.close();
+  if (switchonoff == HIGH ) {
+
+
+    dataFile.println(savedBPM);
+
+  } else {
+    //dataFile.print(0);
+
+  }
+
+  dataFile.flush();
+  dataFile.close();
   arrayBPM[count] = savedBPM;
   count = count + 1;
   //int i = 0;
@@ -162,6 +181,5 @@ void loop() {
   //   }
 
 
-
-
+  //dataFile.close();
 }

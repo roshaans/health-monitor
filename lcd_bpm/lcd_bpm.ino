@@ -1,7 +1,5 @@
-#include <PulseSensorPlayground.h>
-
 //calculates bpm + displays on lcd
-//12/04/18
+//12/09/18
 
 #define USE_ARDUINO_INTERRUPTS true    // Set-up low-level interrupts for most acurate BPM math.
 #include <PulseSensorPlayground.h>     // Includes the PulseSensorPlayground Library.   

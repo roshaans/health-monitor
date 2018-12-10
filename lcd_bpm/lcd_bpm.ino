@@ -9,6 +9,8 @@
 #include <SPI.h>      // library for SPI communication (for uSD reader/writer)
 
 //const int OUTPUT_TYPE = PROCESSING_VUSUALIZER;
+String previousData = "";
+String counter = "";
 
 int PulseSensorPurplePin = 0;        // Pulse Sensor PURPLE WIRE connected to ANALOG PIN 0
 int LED13 = 2;   //  The on-board Arduion LED
@@ -27,7 +29,6 @@ long starttime = 0;   // variable to store the time at which the switch is press
 long endtime = 0;     // variable to store the time at which the switch is released
 float elapsedtime = 0; // variable to store the amount of time the switch is pressed
 int switchonoff = 0;
-
 
 
 int powersensorPin = 3;
@@ -87,8 +88,6 @@ void setup() {
   }
 
 
-}
-
 
 void loop() {
   Signal = analogRead(PulseSensorPurplePin);  // Read the PulseSensor's value.
@@ -110,7 +109,8 @@ void loop() {
   String dataString = "";
   //dataString += "";
   dataString += String(savedBPM);
-  dataString += "";
+   
+
   //dataString += String(distance);
   //dataString += "";
 
@@ -162,9 +162,10 @@ void loop() {
   lcd.print((savedBPM));
   //Serial.println(savedBPM);
   if (switchonoff == HIGH ) {
-
-
     dataFile.println(savedBPM);
+    dataString += " "  ;
+ 
+
 
   } else {
     //dataFile.print(0);

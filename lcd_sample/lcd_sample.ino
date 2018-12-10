@@ -17,7 +17,7 @@ void setup()
 
 	// Turn on the blacklight and print a message.
 	lcd.backlight();
-  //lcd.print("Hello, world .          !");
+  //lcd.print("Hello, world!");
 }
 
 void loop()

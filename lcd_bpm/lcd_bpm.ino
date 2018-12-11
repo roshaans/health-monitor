@@ -87,7 +87,7 @@ void setup() {
     delay(2000);
   }
 
-
+}
 
 void loop() {
   Signal = analogRead(PulseSensorPurplePin);  // Read the PulseSensor's value.

@@ -1,7 +1,7 @@
 clear all
 close all
-load('newData.mat', 'data1')
-load('newData.mat', 'data2')
+load('pulseData.mat', 'data1')
+load('pulseData.mat', 'data2')
 ID = data1;
 BPM = data2;
 %% Structure
@@ -14,8 +14,9 @@ end
 
 
 figure;
-plot(1:length(ID),s{i}.BPM{2})
+plot(1:length(s{1}.BPM{2}),s{1}.BPM{2})
 title("ID VS BPM")
-xlabel("ID");
+xlabel("Day");
 ylabel("BPM");
+title('Data for ID#2')
 

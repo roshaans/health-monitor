@@ -59,16 +59,16 @@ void setup() {
 
   lcd.begin();
   lcd.backlight();
-    lcd.clear();
- lcd.print("Get started by");
- lcd.setCursor(0, 1);
- lcd.print("pressing Button");
+  lcd.clear();
+  lcd.print("Get started by");
+  lcd.setCursor(0, 1);
+  lcd.print("pressing Button");
   pinMode(enrollButton, INPUT);
-  
-//   if (pulseSensor.begin()) {
-//      Serial.println("We created a pulseSensor Object !");  //This prints one time at Arduino power-up,  or on Arduino reset.
-//       }
-//    lcd.print("BPM:"); //displays on displayboard
+
+  //   if (pulseSensor.begin()) {
+  //      Serial.println("We created a pulseSensor Object !");  //This prints one time at Arduino power-up,  or on Arduino reset.
+  //       }
+  //    lcd.print("BPM:"); //displays on displayboard
 
   // see if the card is present and can be initialized:
   if (!SD.begin(chipSelect)) {
@@ -81,13 +81,14 @@ void setup() {
 
 void loop() {
 
-//  File dataFile = SD.open("DATA.txt", FILE_WRITE);
-//
-//
+//  File dataFile = SD.open("DATAsample.txt", FILE_WRITE);
+//  //
+//  //
 //  String dataString = "";
-//  //dataString += "";
-//  dataString += String(savedBPM);
-
+//    //dataString += "";
+//    dataString += String(currentUserId);
+//
+//dataFile.print(currentUserId);
 
   enrollButtonState = digitalRead(enrollButton);
 
@@ -96,20 +97,20 @@ void loop() {
   //
   //   firstTime = false;
   //   }
- if (enrollButtonState == HIGH and firstTime == true) {
-   lcd.clear();
- lcd.print("Scan Your Finger!");
- lcd.setCursor(1, 1);
- lcd.print(":) :0 :) :0 :) ");
+  if (enrollButtonState == HIGH and firstTime == true) {
+    lcd.clear();
+    lcd.print("Scan Your Finger!");
+    lcd.setCursor(1, 1);
+    lcd.print(":) :0 :) :0 :) ");
     Serial.println("FingerPrint Scanner ON!");
     setUpFingerprintModule();
     scanFinger = true;
-    
+
     firstTime = false;
 
   }
 
- 
+
   if (scanFinger == true ) {
     getFingerprintIDez();
     delay(50);            //don't ned to run this at full speed.
@@ -126,22 +127,23 @@ void loop() {
 
     scanFinger = false;
     isBPM = true;
+    isFirstTime == true;
 
   }
 
-  
+
 
 
   while (isBPM == true) {
     if (isFirstTime == true) {
-    lcd.clear();
- lcd.print("Scan your Heart");
- lcd.setCursor(5, 1);
- lcd.print("Rate!");
- delay(3000);
-  lcd.clear();
+      lcd.clear();
+      lcd.print("Scan your Heart");
+      lcd.setCursor(5, 1);
+      lcd.print("Rate!");
+      delay(3000);
+      lcd.clear();
 
- isFirstTime = false;
+      isFirstTime = false;
     }
     BPMSensor();
   }
@@ -152,34 +154,100 @@ void loop() {
 
 
 void BPMSensor() {
+  Signal = analogRead(PulseSensorPurplePin);  // Read the PulseSensor's value.
 
   Serial.begin(9600);
   if (pulseSensor.begin()) {
+    lcd.setCursor(0, 0);
     lcd.print("BPM:");
 
     //Serial.println("We created a pulseSensor Object");
   }
-  Signal = analogRead(PulseSensorPurplePin);  // Read the PulseSensor's value.
-  int myBPM = pulseSensor.getBeatsPerMinute();  // Calls function on our pulseSensor object that returns BPM as an "int".
 
 
-  File dataFile = SD.open("DATA.txt", FILE_WRITE);
+  File dataFile = SD.open("DATA1.txt", FILE_WRITE);
 
 
   String dataString = "";
   //dataString += "";
   dataString += String(savedBPM);
+  //dataString += "";
+  //dataString += String(currentUserId);
+
+ // dataFile.print(currentUserId);
 
 
+  int myBPM = pulseSensor.getBeatsPerMinute();  // Calls function on our pulseSensor object that returns BPM as an "int".
 
-  Serial.println(myBPM);
+  /*Saving BPM and printing it on lcd*/
+  //while (isBPM == true) {
+  //Serial.println("♥  A HeartBeat Happened ! "); // If test is "true", print a message "a heartbeat happened".
+  lcd.setCursor(13, 0);
+  lcd.print(myBPM);// Print the value inside of myBPM.
+  lcd.print("   ");
+  lcd.setCursor(13, 0);
+  lcd.print(myBPM);
+
+  delay(200);
+
+  
+  //Serial.println(myBPM);
   /* whisker switch*/
+//  switchonoff = digitalRead(switchPin);   // read the current state of the switch
+//  if (switchonoff == HIGH) {  // 1st test - is the switch on/off, 1/0, HIGH/LOW?
+//    if (flag == 0) {
+//      i = i + 1;
+//      savedBPM = myBPM;
+//      Serial.println(savedBPM);
+//      //      dataFile.println(savedBPM);
+//      //      dataFile.print(" ");
+//      //      dataFile.print(currentUserId);
+//      //dataString += "  "  ;
+//      flag = 1;               // change the flag's "state"
+//      delay(50);
+//    }
+//
+//  }
+//
+//  if (switchonoff == LOW && flag == 1) {       // 1st & 2nd tests together (not nested)
+//    flag = 0;          //print the elapsed time to serial monitor
+//  }
+//
+//
+//
+//
+//
+//  lcd.setCursor(13, 1);
+//  lcd.print(savedBPM);// Print the value inside of myBPM.
+//  lcd.print("   ");
+//  lcd.setCursor(13, 1);
+//  lcd.print(savedBPM);
+//
+//  if (switchonoff == HIGH ) {
+//    dataFile.print(savedBPM);
+//    dataString += " "  ;
+//    //dataFile.println(currentUserId);
+//    //dataString += "  "  ;
+//  } else {
+//    //dataFile.print(0);
+//
+//  }
+//
+//  dataFile.flush();
+//  dataFile.close();
+//
+//}
+ /* whisker switch*/
   switchonoff = digitalRead(switchPin);   // read the current state of the switch
   if (switchonoff == HIGH) {  // 1st test - is the switch on/off, 1/0, HIGH/LOW?
     if (flag == 0) {
       i = i + 1;
       savedBPM = myBPM;
       Serial.println(savedBPM);
+      dataFile.println(savedBPM);
+      dataString += " "  ;
+      //dataFile.println(dataString);
+      //dataFile.print(savedBPM);
       flag = 1;               // change the flag's "state"
       delay(50);
     }
@@ -191,30 +259,18 @@ void BPMSensor() {
   }
 
 
-
-
-  /*Saving BPM and printing it on lcd*/
-  //while (isBPM == true) {
-  //Serial.println("♥  A HeartBeat Happened ! "); // If test is "true", print a message "a heartbeat happened".
-  lcd.setCursor(13, 0);
-  lcd.print((myBPM));// Print the value inside of myBPM.
-  lcd.print("   ");
-  lcd.setCursor(13, 0);
-  lcd.print((myBPM));
-
-  delay(200);
-
+  //Serial.println(switchonoff);
   lcd.setCursor(13, 1);
   lcd.print((savedBPM));// Print the value inside of myBPM.
   lcd.print("   ");
   lcd.setCursor(13, 1);
   lcd.print((savedBPM));
-
+  
+  //Serial.println(savedBPM);
   if (switchonoff == HIGH ) {
-    dataFile.print(currentUserId);
-    dataFile.print(" ");
     dataFile.println(savedBPM);
-    dataString += "  "  ;
+    dataString += " "  ;
+
   } else {
     //dataFile.print(0);
 
@@ -222,7 +278,15 @@ void BPMSensor() {
 
   dataFile.flush();
   dataFile.close();
+  //arrayBPM[count] = savedBPM;
+  //count = count + 1;
+  //int i = 0;
+  //  for (int i = 0; i<=count; i++){
+  //      Serial.println(arrayBPM[i]);
+  //   }
 
+
+  //dataFile.close();
 }
 
 
@@ -256,71 +320,71 @@ void setUpFingerprintModule() {
   Serial.println("Waiting for valid finger...");
 }
 uint8_t getFingerprintID() {
-  
-    uint8_t p = finger.getImage();
-    switch (p) {
-      case FINGERPRINT_OK:
-        Serial.println("Image taken");
-        break;
-      case FINGERPRINT_NOFINGER:
-        Serial.println("No finger detected");
-        return p;
-      case FINGERPRINT_PACKETRECIEVEERR:
-        Serial.println("Communication error");
-        return p;
-      case FINGERPRINT_IMAGEFAIL:
-        Serial.println("Imaging error");
-        return p;
-      default:
-        Serial.println("Unknown error");
-        return p;
-    }
 
-    // OK success!
-
-    p = finger.image2Tz();
-    switch (p) {
-      case FINGERPRINT_OK:
-        Serial.println("Image converted");
-        break;
-      case FINGERPRINT_IMAGEMESS:
-        Serial.println("Image too messy");
-        return p;
-      case FINGERPRINT_PACKETRECIEVEERR:
-        Serial.println("Communication error");
-        return p;
-      case FINGERPRINT_FEATUREFAIL:
-        Serial.println("Could not find fingerprint features");
-        return p;
-      case FINGERPRINT_INVALIDIMAGE:
-        Serial.println("Could not find fingerprint features");
-        return p;
-      default:
-        Serial.println("Unknown error");
-        return p;
-    }
-   
-    // OK converted!
-    p = finger.fingerFastSearch();
-    if (p == FINGERPRINT_OK) {
-      Serial.println("Found a print match!");
-    } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+  uint8_t p = finger.getImage();
+  switch (p) {
+    case FINGERPRINT_OK:
+      Serial.println("Image taken");
+      break;
+    case FINGERPRINT_NOFINGER:
+      Serial.println("No finger detected");
+      return p;
+    case FINGERPRINT_PACKETRECIEVEERR:
       Serial.println("Communication error");
       return p;
-    } else if (p == FINGERPRINT_NOTFOUND) {
-      Serial.println("Did not find a match");
+    case FINGERPRINT_IMAGEFAIL:
+      Serial.println("Imaging error");
       return p;
-    } else {
+    default:
       Serial.println("Unknown error");
       return p;
-    }
+  }
 
-    // found a match!
-    Serial.print("Found ID #"); Serial.print(finger.fingerID);
-    Serial.print(" with confidence of "); Serial.println(finger.confidence);
-    currentUserId = id;
-    return finger.fingerID;
-  
+  // OK success!
+
+  p = finger.image2Tz();
+  switch (p) {
+    case FINGERPRINT_OK:
+      Serial.println("Image converted");
+      break;
+    case FINGERPRINT_IMAGEMESS:
+      Serial.println("Image too messy");
+      return p;
+    case FINGERPRINT_PACKETRECIEVEERR:
+      Serial.println("Communication error");
+      return p;
+    case FINGERPRINT_FEATUREFAIL:
+      Serial.println("Could not find fingerprint features");
+      return p;
+    case FINGERPRINT_INVALIDIMAGE:
+      Serial.println("Could not find fingerprint features");
+      return p;
+    default:
+      Serial.println("Unknown error");
+      return p;
+  }
+
+  // OK converted!
+  p = finger.fingerFastSearch();
+  if (p == FINGERPRINT_OK) {
+    Serial.println("Found a print match!");
+  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+    Serial.println("Communication error");
+    return p;
+  } else if (p == FINGERPRINT_NOTFOUND) {
+    Serial.println("Did not find a match");
+    return p;
+  } else {
+    Serial.println("Unknown error");
+    return p;
+  }
+
+  // found a match!
+  Serial.print("Found ID #"); Serial.print(finger.fingerID);
+  Serial.print(" with confidence of "); Serial.println(finger.confidence);
+  currentUserId = id;
+  return finger.fingerID;
+
 }
 
 // returns -1 if failed, otherwise returns ID #

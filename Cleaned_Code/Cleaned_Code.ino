@@ -434,21 +434,21 @@ uint8_t getFingerprintEnroll() {
     case FINGERPRINT_OK:
       Serial.println("Image converted");
       break;
-    case FINGERPRINT_IMAGEMESS:
-      Serial.println("Image too messy");
-      return p;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      Serial.println("Communication error");
-      return p;
-    case FINGERPRINT_FEATUREFAIL:
-      Serial.println("Could not find fingerprint features");
-      return p;
-    case FINGERPRINT_INVALIDIMAGE:
-      Serial.println("Could not find fingerprint features");
-      return p;
-    default:
-      Serial.println("Unknown error");
-      return p;
+//    case FINGERPRINT_IMAGEMESS:
+//      Serial.println("Image too messy");
+//      return p;
+//    case FINGERPRINT_PACKETRECIEVEERR:
+//      Serial.println("Communication error");
+//      return p;
+//    case FINGERPRINT_FEATUREFAIL:
+//      Serial.println("Could not find fingerprint features");
+//      return p;
+//    case FINGERPRINT_INVALIDIMAGE:
+//      Serial.println("Could not find fingerprint features");
+//      return p;
+//    default:
+//      Serial.println("Unknown error");
+//      return p;
   }
 
   Serial.println("Remove finger");
@@ -473,15 +473,15 @@ uint8_t getFingerprintEnroll() {
       case FINGERPRINT_NOFINGER:
         Serial.print(".");
         break;
-      case FINGERPRINT_PACKETRECIEVEERR:
-        Serial.println("Communication error");
-        break;
-      case FINGERPRINT_IMAGEFAIL:
-        Serial.println("Imaging error");
-        break;
-      default:
-        Serial.println("Unknown error");
-        break;
+//      case FINGERPRINT_PACKETRECIEVEERR:
+//        Serial.println("Communication error");
+//        break;
+//      case FINGERPRINT_IMAGEFAIL:
+//        Serial.println("Imaging error");
+//        break;
+//      default:
+//        Serial.println("Unknown error");
+//        break;
     }
   }
 
@@ -492,21 +492,21 @@ uint8_t getFingerprintEnroll() {
     case FINGERPRINT_OK:
       Serial.println("Image converted");
       break;
-    case FINGERPRINT_IMAGEMESS:
-      Serial.println("Image too messy");
-      return p;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      Serial.println("Communication error");
-      return p;
-    case FINGERPRINT_FEATUREFAIL:
-      Serial.println("Could not find fingerprint features");
-      return p;
-    case FINGERPRINT_INVALIDIMAGE:
-      Serial.println("Could not find fingerprint features");
-      return p;
-    default:
-      Serial.println("Unknown error");
-      return p;
+//    case FINGERPRINT_IMAGEMESS:
+//      Serial.println("Image too messy");
+//      return p;
+//    case FINGERPRINT_PACKETRECIEVEERR:
+//      Serial.println("Communication error");
+//      return p;
+//    case FINGERPRINT_FEATUREFAIL:
+//      Serial.println("Could not find fingerprint features");
+//      return p;
+//    case FINGERPRINT_INVALIDIMAGE:
+//      Serial.println("Could not find fingerprint features");
+//      return p;
+//    default:
+//      Serial.println("Unknown error");
+//      return p;
   }
 
   // OK converted!
@@ -548,18 +548,18 @@ uint8_t getFingerprintEnroll() {
 
 
 
-  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
-    Serial.println("Communication error");
-    return p;
-  } else if (p == FINGERPRINT_BADLOCATION) {
-    Serial.println("Could not store in that location");
-    return p;
-  } else if (p == FINGERPRINT_FLASHERR) {
-    Serial.println("Error writing to flash");
-    return p;
-  } else {
-    Serial.println("Unknown error");
-    return p;
-  }
+//  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+//    Serial.println("Communication error");
+//    return p;
+//  } else if (p == FINGERPRINT_BADLOCATION) {
+//    Serial.println("Could not store in that location");
+//    return p;
+//  } else if (p == FINGERPRINT_FLASHERR) {
+//    Serial.println("Error writing to flash");
+//    return p;
+//  } else {
+//    Serial.println("Unknown error");
+//    return p;
+//  }
 
-}
+  }}

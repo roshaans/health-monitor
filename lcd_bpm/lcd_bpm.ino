@@ -133,7 +133,6 @@ void loop() {
 //}
 
 
-
   /* whisker switch*/
   switchonoff = digitalRead(switchPin);   // read the current state of the switch
   if (switchonoff == HIGH) {  // 1st test - is the switch on/off, 1/0, HIGH/LOW?
@@ -160,12 +159,11 @@ void loop() {
   lcd.print("   ");
   lcd.setCursor(13, 1);
   lcd.print((savedBPM));
+  
   //Serial.println(savedBPM);
   if (switchonoff == HIGH ) {
     dataFile.println(savedBPM);
     dataString += " "  ;
- 
-
 
   } else {
     //dataFile.print(0);

@@ -1,4 +1,4 @@
-# Health Monitoring Device
+# 💓 Health Monitoring Device
 A central family monitoring device that stores multiple individual's health data into one place for accessibility. 
 
 ## Goals
